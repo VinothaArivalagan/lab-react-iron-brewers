@@ -8,7 +8,40 @@ import beersJSON from "./../assets/beers.json";
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
   const [beers, setBeers] = useState(beersJSON);
+    const [query, setQuery] = useState("");
 
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(API_URL);
+          console.log('response.data', response.data)
+          setBeers(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+  
+    useEffect(() => {
+      const fetchSearchedBeers = async () => {
+        try {
+          const response = await axios.get(API_URL + `/search?q=${query}`);
+  
+          setBeers(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchSearchedBeers();
+    }, [query]);
+  
+    const searchHandler = (string) => {
+      setQuery(string);
+    };
+  
 
 
   // TASKS:

@@ -1,4 +1,12 @@
-function Search() {
+import { useState } from "react";
+
+function Search({ searchHandler }) {
+  const [string, setString] = useState("");
+
+  const handleSearch = (e) => {
+    setString(e.target.value);
+    searchHandler(e.target.value);
+  };
   return (
     <div className="d-inline-flex justify-content-center align-items-center w-100 p-4">
       <div className="input-group mb-2 w-50">
